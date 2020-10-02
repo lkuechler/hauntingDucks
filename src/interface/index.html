@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Haunting Ducks</title>
+		<link rel="stylesheet" href="index.css" />
+	</head>
+	<body>
+		<h1>Haunting Ducks</h1>
+		<div class="page visible" id="enterRoom">
+			<form id="form" class="card">
+				<label class="input">
+					Enter Roomcode
+					<input
+						class="input_input"
+						id="inputRoomcode"
+						type="text"
+						required
+					/>
+				</label>
+				<label class="input">
+					Enter Name
+					<input
+						class="input_input"
+						id="inputName"
+						type="text"
+						required
+					/>
+				</label>
+				<button class="button">Join room</button>
+			</form>
+		</div>
+
+		<div class="page" id="lobby">
+			<div class="card">
+				<h3>Players</h3>
+				<ul id="playerList" class="playerList">
+					<li></li>
+				</ul>
+
+				<button class="button" id="startGame">Start game</button>
+			</div>
+		</div>
+
+		<div class="page" id="gameInfo" class="gameInfo">
+			<div class="card">
+				<h2>Game info</h2>
+				<div>
+					Your target is: <b id="target"></b>
+					<button id="kill">I killed my target</button>
+				</div>
+				<div>You have <b class="kills"></b> kills!</div>
+			</div>
+		</div>
+
+		<div class="page" id="gameOver" class="gameOver">
+			<div class="card card--dead">
+				<h2>You are dead!</h2>
+				<p>You got killed by <b id="killer">unknown</b></p>
+				<div>You killed <b class="kills">0</b> others!</div>
+			</div>
+		</div>
+		<script src="/index.js"></script>
+	</body>
+</html>
