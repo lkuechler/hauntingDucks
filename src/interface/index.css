@@ -69,3 +69,7 @@ h1 {
 .avatar {
 	font-size: 3em;
 }
+
+.deathNote {
+	font-style: italic;
+}

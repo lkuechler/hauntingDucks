@@ -147,7 +147,7 @@ function renderInterface() {
 	}
 
 	if (previousState.killedBy !== state.killedBy) {
-		updateKiller();
+		updateDeathNote();
 	}
 
 	if (
@@ -215,10 +215,30 @@ function updatePlayerList() {
 	playerListNode.innerHTML = list;
 }
 
-const killerNode = document.querySelector("#killer");
-function updateKiller() {
-	console.log("updateKiller", state.killedBy);
-	killerNode.innerHTML = state.killedBy;
+const deathNotes = [
+	"$killer picked you to death!",
+	"$killer confused you breadcrumbs and gobbled you up!",
+	"$killer's incessant quacking causes your brain to hemorrhage.",
+	"$killer made everyone forget about you. A fate worse than dying! Still, ...",
+	"$killer force-feeds you Kehlenschlitzer. You want to die - and you do!",
+	"$killer stabs you. You survive only to be run over by a passing raft of ducks!",
+	"$killer stabs you. You survive only to be run over by a passing team of ducks!",
+	"$killer stabs you. You survive only to be run over by a passing paddling of ducks!",
+	"$killer stabs you. You survive only to be run over by a passing pond of ducks!",
+	"$killer stabs you. You survive only to be run over by a passing badling of ducks!",
+	"$killer pushes you off a cliff. You try to fly, but sadly you are a T-Rex. Splat!",
+	"$killer beheads you!",
+	"$killer forces you to become a smoker. You die slowly, but still ...",
+	"$killer disembowels you with a toothpick of doom!",
+	"$killer kills you. Everyone else takes turns looting your mangled corpse!",
+	"You ask for help to defeat $killer. Nobody helps because of your smelly socks!",
+	"You're about to win against $killer, but someone plays a +10 on them.",
+];
+const deathNoteNode = document.querySelector("#deathNote");
+function updateDeathNote() {
+	deathNoteNode.innerHTML = deathNotes[
+		Math.floor(Math.random() * deathNotes.length)
+	].replace("$killer", state.killedBy);
 }
 
 function getAvatar(player) {
