@@ -123,7 +123,9 @@ function updateGameState() {
 			state.target = data.target;
 			state.living = data.living;
 			state.killedBy = data.killedBy;
-			avatarNode.innerHTML = getAvatar(data.players[state.target]);
+			if (state.target) {
+				avatarNode.innerHTML = getAvatar(data.players[state.target]);
+			}
 			targetNode.innerHTML = state.target;
 		});
 }
