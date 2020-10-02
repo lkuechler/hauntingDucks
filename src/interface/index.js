@@ -57,11 +57,13 @@ function formSubmit() {
 			state.players = data.players;
 			state.target = data.target;
 			targetNode.innerHTML = state.target;
+			state.living = data.living;
 			renderInterface();
 			tick();
 		});
 }
 
+const avatarNode = document.querySelector("#avatar");
 function startGame() {
 	fetch(`/startGame`, {
 		method: "POST",
@@ -121,6 +123,7 @@ function updateGameState() {
 			state.target = data.target;
 			state.living = data.living;
 			state.killedBy = data.killedBy;
+			avatarNode.innerHTML = getAvatar(data.players[state.target]);
 			targetNode.innerHTML = state.target;
 		});
 }

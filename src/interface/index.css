@@ -50,6 +50,7 @@ h1 {
 }
 
 .button {
+	display: block;
 	min-height: 25px;
 }
 
@@ -68,6 +69,10 @@ h1 {
 
 .avatar {
 	font-size: 3em;
+}
+
+#gameInfo .avatar {
+	font-size: 5em;
 }
 
 .deathNote {
