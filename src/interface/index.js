@@ -34,7 +34,9 @@ startGameButton.addEventListener("click", (event) => {
 killNode.addEventListener("click", (event) => {
 	console.log("killTarget");
 	event.preventDefault();
-	killTarget();
+	if (window.confirm(`Are you sure that want to kill ${state.target}?`)) {
+		killTarget();
+	}
 });
 
 function formSubmit() {
