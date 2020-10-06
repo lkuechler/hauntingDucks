@@ -12,11 +12,25 @@ const killsNodes = document.querySelectorAll(".kills");
 
 let state = {};
 
+function init() {
+	const roomcode = localStorage.getItem("roomcode");
+	if (roomcode) {
+		inputRoomcode.value = roomcode;
+	}
+
+	const name = localStorage.getItem("name");
+	if (name) {
+		inputName.value = name;
+	}
+}
+
 function updateRoomCode() {
 	state.roomcode = inputRoomcode.value;
+	localStorage.setItem("roomcode", inputRoomcode.value);
 }
 function updateName() {
 	state.name = inputName.value;
+	localStorage.setItem("name", inputName.value);
 }
 
 form.addEventListener("submit", (event) => {
@@ -268,3 +282,5 @@ function getAvatar(player) {
 			break;
 	}
 }
+
+init();
