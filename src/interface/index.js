@@ -48,7 +48,9 @@ startGameButton.addEventListener("click", (event) => {
 killNode.addEventListener("click", (event) => {
 	console.log("killTarget");
 	event.preventDefault();
-	killTarget();
+	if (window.confirm(`Are you sure that want to kill ${state.target}?`)) {
+		killTarget();
+	}
 });
 
 function formSubmit() {
@@ -264,22 +266,28 @@ function getAvatar(player) {
 	switch (player.avatar) {
 		case "duck":
 			return "🦆";
-			break;
 		case "tRex":
 			return "🦖";
-			break;
 		case "chick":
 			return "🐤";
-			break;
 		case "frontChick":
 			return "🐥";
-			break;
 		case "babyChick":
 			return "🐣";
-			break;
+		case "llama":
+			return "🦙";
+		case "otter":
+			return "🦦";
+		case "monkey":
+			return "🐒";
+		case "penguin":
+			return "🐧";
+		case "chicken":
+			return "🐔";
+		case "sloth":
+			return "🦥";
 		default:
 			return "🦆";
-			break;
 	}
 }
 

@@ -32,7 +32,19 @@ const DummyState = {
 function createNewRoom(roomcode, hostPlayer) {
 	DummyState[roomcode] = { status: "waiting", players: {} };
 }
-const avatarList = ["duck", "tRex", "chick", "frontChick", "babyChick"];
+const avatarList = [
+	"duck",
+	"tRex",
+	"chick",
+	"frontChick",
+	"babyChick",
+	"llama",
+	"otter",
+	"monkey",
+	"penguin",
+	"chicken",
+	"sloth",
+];
 function joinRoom(roomcode, playerName) {
 	if (DummyState[roomcode].players[playerName]) {
 		return;
