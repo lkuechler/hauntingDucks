@@ -13,9 +13,9 @@ const killsNodes = document.querySelectorAll(".kills");
 let state = {};
 
 function init() {
-	const roomcode = localStorage.getItem("roomcode");
-	if (roomcode) {
-		inputRoomcode.value = roomcode;
+	const roomCode = localStorage.getItem("roomCode");
+	if (roomCode) {
+		inputRoomcode.value = roomCode;
 	}
 
 	const name = localStorage.getItem("name");
@@ -25,8 +25,8 @@ function init() {
 }
 
 function updateRoomCode() {
-	state.roomcode = inputRoomcode.value;
-	localStorage.setItem("roomcode", inputRoomcode.value);
+	state.roomCode = inputRoomcode.value;
+	localStorage.setItem("roomCode", inputRoomcode.value);
 }
 function updateName() {
 	state.name = inputName.value;
@@ -56,14 +56,17 @@ killNode.addEventListener("click", (event) => {
 function formSubmit() {
 	updateRoomCode();
 	updateName();
-	console.log(`/createRoom`, JSON.stringify(state));
-	fetch(`/createRoom`, {
-		method: "POST",
-		headers: {
-			"Content-Type": "application/json",
-		},
-		body: JSON.stringify(state),
-	})
+	console.log(`/requestRoom`, JSON.stringify(state));
+	fetch(
+		`https://1qmbdy03n6.execute-api.eu-west-1.amazonaws.com/prod/requestroom`,
+		{
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(state),
+		}
+	)
 		.then((response) => response.json())
 		.then((data) => {
 			console.log(data);
