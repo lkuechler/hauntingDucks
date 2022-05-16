@@ -9,6 +9,7 @@ const startGameButton = document.querySelector("#startGame");
 const targetNode = document.querySelector("#target");
 const killNode = document.querySelector("#kill");
 const killsNodes = document.querySelectorAll(".kills");
+const killCodeNode = document.querySelector("#killCode");
 const leaveRoomNodes = document.querySelectorAll(".leaveRoom");
 
 let state = {};
@@ -47,10 +48,13 @@ startGameButton.addEventListener("click", (event) => {
 });
 
 killNode.addEventListener("click", (event) => {
-	console.log("killTarget");
 	event.preventDefault();
-	if (window.confirm(`Are you sure that want to kill ${state.target}?`)) {
-		killTarget();
+
+	const targetKillCode = window.prompt(
+		`Are you sure that want to kill ${state.target}?`
+	);
+	if (targetKillCode) {
+		killTarget(targetKillCode);
 	}
 });
 
@@ -78,6 +82,7 @@ function formSubmit() {
 			console.log(data);
 			state.kills = data.kills;
 			killsNodes.forEach((node) => (node.innerHTML = state.kills));
+			killCodeNode.innerHTML = state.killCode;
 			state.status = data.status;
 			state.players = data.players;
 			state.target = data.target;
@@ -101,7 +106,9 @@ function startGame() {
 		.then((data) => {
 			console.log(data);
 			state.kills = data.kills;
+			state.killCode = data.killCode;
 			killsNodes.forEach((node) => (node.innerHTML = state.kills));
+			killCodeNode.innerHTML = state.killCode;
 			state.status = data.status;
 			state.players = data.players;
 			state.target = data.target;
@@ -109,14 +116,22 @@ function startGame() {
 		});
 }
 
-function killTarget() {
+function killTarget(targetKillCode) {
 	fetch(`/targetKilled`, {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",
 		},
-		body: JSON.stringify(state),
+		body: JSON.stringify({
+			...state,
+			targetKillCode: targetKillCode,
+		}),
 	})
+		.then((response) => {
+			if (response.status === 403) {
+				throw new Error("(403) Invalid kill code");
+			}
+		})
 		.then((response) => response.json())
 		.then((data) => {
 			console.log(data);
@@ -124,6 +139,12 @@ function killTarget() {
 			state.kills = data.kills;
 			targetNode.innerHTML = state.target;
 			killsNodes.forEach((node) => (node.innerHTML = state.kills));
+			killCodeNode.innerHTML = state.killCode;
+		})
+		.catch((e) => {
+			if (e.message.includes("403")) {
+				alert("Invalid code");
+			}
 		});
 }
 
@@ -142,7 +163,9 @@ function updateGameState() {
 			}
 			// console.log(data);
 			state.kills = data.kills;
+			state.killCode = data.killCode;
 			killsNodes.forEach((node) => (node.innerHTML = state.kills));
+			killCodeNode.innerHTML = state.killCode;
 			state.status = data.status;
 			state.players = data.players;
 			state.target = data.target;
