@@ -286,6 +286,8 @@ function getAvatar(player) {
 			return "🐔";
 		case "sloth":
 			return "🦥";
+		case "shark":
+			return "🦈";
 		default:
 			return "🦆";
 	}

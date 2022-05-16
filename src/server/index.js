@@ -44,6 +44,7 @@ const avatarList = [
 	"penguin",
 	"chicken",
 	"sloth",
+	"shark",
 ];
 function joinRoom(roomcode, playerName) {
 	if (DummyState[roomcode].players[playerName]) {
