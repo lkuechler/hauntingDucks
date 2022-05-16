@@ -54,6 +54,7 @@ function joinRoom(roomcode, playerName) {
 	DummyState[roomcode].players[playerName] = {
 		kills: 0,
 		living: true,
+		killCode: Math.floor(Math.random() * 900) + 100,
 		avatar: avatarList[Math.floor(Math.random() * avatarList.length)],
 	};
 }
@@ -151,17 +152,21 @@ app.post("/targetKilled", (req, res) => {
 
 	const roomcode = req.body.roomcode;
 	const playerName = req.body.name;
-	const target = DummyState[roomcode].players[playerName].target;
-	const targetOfTarget = DummyState[roomcode].players[target].target;
+	const targetKillCode = req.body.targetKillCode;
+	const killer = DummyState[roomcode].players[playerName];
+	const victim = DummyState[roomcode].players[killer.target];
 
-	DummyState[roomcode].players[target].living = false;
-	DummyState[roomcode].players[target].killedBy = playerName;
-	console.log(
-		`${playerName} tries to kill ${target}`,
-		DummyState[roomcode].players[target].living
-	);
-	DummyState[roomcode].players[playerName].kills++;
-	DummyState[roomcode].players[playerName].target = targetOfTarget;
+	console.log(`${playerName} tries to kill ${killer.target}`);
+
+	if (victim.killCode != targetKillCode) {
+		res.status(403).send();
+		return;
+	}
+
+	victim.living = false;
+	victim.killedBy = playerName;
+	killer.kills++;
+	killer.target = victim.target;
 
 	res.send(JSON.stringify(DummyState[roomcode].players[playerName]));
 });
