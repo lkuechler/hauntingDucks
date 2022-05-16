@@ -9,6 +9,7 @@ const startGameButton = document.querySelector("#startGame");
 const targetNode = document.querySelector("#target");
 const killNode = document.querySelector("#kill");
 const killsNodes = document.querySelectorAll(".kills");
+const leaveRoomNodes = document.querySelectorAll(".leaveRoom");
 
 let state = {};
 
@@ -51,6 +52,14 @@ killNode.addEventListener("click", (event) => {
 	if (window.confirm(`Are you sure that want to kill ${state.target}?`)) {
 		killTarget();
 	}
+});
+
+leaveRoomNodes.forEach((leaveRoomNode) => {
+	leaveRoomNode.addEventListener("click", (event) => {
+		console.log("leaveRoom");
+		event.preventDefault();
+		location.reload();
+	});
 });
 
 function formSubmit() {
