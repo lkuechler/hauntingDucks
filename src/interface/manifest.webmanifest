@@ -4,7 +4,7 @@
 	"display": "fullscreen",
 	"icons": [
 		{
-			"src": "icon/duck-icon.png",
+			"src": "icon/duck_icon.png",
 			"sizes": "192x192",
 			"type": "image/png"
 		}
