@@ -1,5 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const fs = require("fs");
 
 const app = express();
 const port = 3000;
@@ -12,7 +13,7 @@ function shuffle(players) {
 	return players;
 }
 
-const DummyState = {
+let DummyState = {
 	haunted: {
 		players: {
 			player01: {
@@ -28,6 +29,10 @@ const DummyState = {
 		},
 	},
 };
+if (!fs.existsSync("currentState.json")) {
+	fs.writeFileSync("currentState.json", "{}");
+}
+DummyState = JSON.parse(fs.readFileSync("currentState.json"));
 
 function createNewRoom(roomcode, hostPlayer) {
 	DummyState[roomcode] = { status: "waiting", players: {} };
@@ -200,6 +205,7 @@ app.listen(port, () => {
 function validateRequest(req, res) {
 	const roomcode = req.body.roomcode;
 	const playerName = req.body.name;
+	fs.writeFileSync("currentState.json", JSON.stringify(DummyState));
 
 	if (!DummyState[roomcode]) {
 		console.log(`Room with code "${roomcode}" not found!`);
