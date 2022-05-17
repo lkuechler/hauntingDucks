@@ -32,6 +32,13 @@ const DummyState = {
 function createNewRoom(roomcode, hostPlayer) {
 	DummyState[roomcode] = { status: "waiting", players: {} };
 }
+
+const baseAction = "Give something to $target.";
+const specialActions = [
+	"Get $target to give you something.",
+	"Get $target to pick something up for you.",
+];
+
 const avatarList = [
 	"duck",
 	"tRex",
@@ -107,13 +114,25 @@ app.post("/startGame", (req, res) => {
 
 	DummyState[roomcode].status = "started";
 	const shuffledPlayerList = shuffle(Object.keys(players));
-	console.log(shuffledPlayerList);
+	console.log({ shuffledPlayerList });
 	shuffledPlayerList.forEach((hunter, index) => {
+		const shouldGetASpecialAction = Math.random() > 0.9;
+		players[hunter].action = shouldGetASpecialAction
+			? specialActions[Math.floor(Math.random() * specialActions.length)]
+			: baseAction;
 		if (shuffledPlayerList.length === index + 1) {
 			players[hunter].target = shuffledPlayerList[0];
+			players[hunter].action = players[hunter].action.replace(
+				"$target",
+				players[hunter].target
+			);
 			return;
 		}
 		players[hunter].target = shuffledPlayerList[index + 1];
+		players[hunter].action = players[hunter].action.replace(
+			"$target",
+			players[hunter].target
+		);
 	});
 
 	JSON.stringify({
@@ -167,6 +186,9 @@ app.post("/targetKilled", (req, res) => {
 	victim.killedBy = playerName;
 	killer.kills++;
 	killer.target = victim.target;
+	killer.action =
+		specialActions[Math.floor(Math.random() * specialActions.length)];
+	killer.action = killer.action.replace("$target", killer.target);
 
 	res.send(JSON.stringify(DummyState[roomcode].players[playerName]));
 });

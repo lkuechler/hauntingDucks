@@ -6,7 +6,7 @@ const inputName = document.querySelector("#inputName");
 
 const startGameButton = document.querySelector("#startGame");
 
-const targetNode = document.querySelector("#target");
+const actionNode = document.querySelector("#action");
 const killNode = document.querySelector("#kill");
 const killsNodes = document.querySelectorAll(".kills");
 const killCodeNode = document.querySelector("#killCode");
@@ -86,7 +86,8 @@ function formSubmit() {
 			state.status = data.status;
 			state.players = data.players;
 			state.target = data.target;
-			targetNode.innerHTML = state.target;
+			state.action = data.action;
+			actionNode.innerHTML = state.action;
 			state.living = data.living;
 			renderInterface();
 			tick();
@@ -112,7 +113,8 @@ function startGame() {
 			state.status = data.status;
 			state.players = data.players;
 			state.target = data.target;
-			targetNode.innerHTML = state.target;
+			state.action = data.action;
+			actionNode.innerHTML = state.action;
 		});
 }
 
@@ -136,8 +138,9 @@ function killTarget(targetKillCode) {
 		.then((data) => {
 			console.log(data);
 			state.target = data.target;
+			state.action = data.action;
 			state.kills = data.kills;
-			targetNode.innerHTML = state.target;
+			actionNode.innerHTML = state.action;
 			killsNodes.forEach((node) => (node.innerHTML = state.kills));
 			killCodeNode.innerHTML = state.killCode;
 		})
@@ -169,12 +172,13 @@ function updateGameState() {
 			state.status = data.status;
 			state.players = data.players;
 			state.target = data.target;
+			state.action = data.action;
 			state.living = data.living;
 			state.killedBy = data.killedBy;
 			if (state.target) {
 				avatarNode.innerHTML = getAvatar(data.players[state.target]);
 			}
-			targetNode.innerHTML = state.target;
+			actionNode.innerHTML = state.action;
 		});
 }
 
